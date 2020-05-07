@@ -1,0 +1,12 @@
+Specific files of code that will (may) need to be updated in order to add the additional features outlined in the Reader's Stats track
+
+- app/views/users/show.html.erb
+- app/controllers/StoriesController (index method) [get "/:username" => "stories#index"]
+- app/models/user.rb
+- app/views/layouts/application.html.erb
+- app/views/users/_sidebar.html.erb (may want to append reader stats here… or not)
+- Stylesheets (some styling regarding layouts may or may not need to change in regards to how we’re displaying our new data) filepath start with: app/assets/stylesheets
+	- /scaffolds.scss
+	- /user-profile-header.scss
+	- /articles.scss
+	- /sidebar-data.scss
