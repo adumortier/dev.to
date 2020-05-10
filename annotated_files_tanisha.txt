@@ -5,8 +5,4 @@ Specific files of code that will (may) need to be updated in order to add the ad
 - app/models/user.rb
 - app/views/layouts/application.html.erb
 - app/views/users/_sidebar.html.erb (may want to append reader stats here… or not)
-- Stylesheets (some styling regarding layouts may or may not need to change in regards to how we’re displaying our new data) filepath start with: app/assets/stylesheets
-	- /scaffolds.scss
-	- /user-profile-header.scss
-	- /articles.scss
-	- /sidebar-data.scss
+
