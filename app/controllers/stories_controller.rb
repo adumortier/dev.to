@@ -309,3 +309,4 @@ class StoriesController < ApplicationController
     @classified_listings = ClassifiedListing.where(published: true).select(:title, :category, :slug, :bumped_at)
   end
 end
+
