@@ -1,9 +1,14 @@
+<%# this file is responsible for rendering the sidebar display %>
+<%# this sidebar is rendered when a user is logged in and clicks on their name/picture in the top left %>
+<%# after the click they are navigated to their profile page, which has the user sidebar and the info below %>
 <div id="sidebar-wrapper-left" class="sidebar-wrapper sidebar-wrapper-left">
   <div class="sidebar-bg" id="sidebar-bg-left"></div>
   <div class="side-bar">
     <div class="user-sidebar">
       <% cache "user-profile-sidebar-profile-details-#{@user.id}-#{@user.profile_updated_at}", expires_in: 10.days do %>
+        <%# add a div here to display all of the user's stats? %>
         <% if @user.mostly_work_with.present? %>
+        <%# conditional rendering for div below to only show if the user has listed skills/languages %>
           <div class="widget">
             <header>
               <h4>skills/languages</h4>
@@ -13,6 +18,7 @@
             </div>
           </div>
         <% end %>
+        <%# conditional rendering to only show if a user has learning/trying listed %>
         <% if @user.currently_learning.present? %>
           <div class="widget">
             <header>
@@ -23,6 +29,7 @@
             </div>
           </div>
         <% end %>
+        <%# conditional rendering to show if a user has projects and hacks %>
         <% if @user.currently_hacking_on.present? %>
           <div class="widget">
             <header>
@@ -33,6 +40,7 @@
             </div>
           </div>
         <% end %>
+        <%# conditional rendering to show div if a user has available for listed %>
         <% if @user.available_for.present? %>
           <div class="widget">
             <header>
@@ -45,6 +53,7 @@
         <% end %>
       <% end %>
       <% cache "user-profile-sidebar-stats-#{@user.id}-#{@user.last_article_at}-#{@user.last_comment_at}-#{@user.last_followed_at}", expires_in: 10.days do %>
+        <%# sections below will show on a user's profile regardless of the numbers (i.e. it will show 0 Posts) %>
         <div class="sidebar-data">
           <div>
             <%= pluralize @user.articles.published.size, "Post" %> Published

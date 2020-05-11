@@ -4,7 +4,9 @@
   <%= render "users/meta" %>
 <% end %>
 
+<%# i think the cache below tells the browser to only re-render that section if something changes? %>
 <% cache "main-user-profile-header-area-#{@user.id}-#{@user.profile_updated_at}", expires_in: 10.days do %>
+<%# why does this whole file use inline styling instead of stylesheets? %>
   <style>
     .widget header {
       color: <%= HexComparer.new([user_colors(@user)[:bg], user_colors(@user)[:text]]).brightness(0.88) %>;
@@ -37,6 +39,7 @@
             <button id="user-follow-butt" class="cta follow-action-button user-profile-follow-button" style="color:<%= user_colors(@user)[:text] %>;background-color:<%= user_colors(@user)[:bg] %>" data-info='{"id":<%= @user.id %>,"className":"<%= @user.class.name %>"}'>&nbsp;</button>
           </span>
           <% if user_signed_in? %>
+          <%# why is the display set to none if the user is signed in? %>
             <span class="user-profile-chat-button-wrapper">
               <a href="/connect/@<%= @user.username %>" id="user-connect-redirect" style="display:none">
                 <button class="chat-action-button user-profile-chat-button" id="modal-opener" style="color:<%= user_colors(@user)[:text] %>;background-color:<%= user_colors(@user)[:bg] %>; display:none; ">CHAT</button>
@@ -55,6 +58,7 @@
             fill: white;
           }
         </style>
+         <%# this whole section seems to use conditional rendering to show the social media icons if a user has those accounts %>
         <p class="social">
           <% if @user.twitter_username? %>
             <a href="https://twitter.com/<%= @user.twitter_username %>" target="_blank" rel="noopener me">
@@ -128,6 +132,8 @@
         </p>
       </div>
     </div>
+    <%# kind of confused about when this section would display. maybe there's a function somewhere that would change
+    display from none to block if a condition is met?  %>
     <div class="modal" style="display: none">
       <div class="overlay"></div>
       <div class="modal-content " id="new-message-modal">
@@ -146,6 +152,7 @@
       </div>
     </div>
     <%= render "articles/user_metadata", context: "profile" %>
+    <%# not sure which dropdown this is referring to. looked in the inspector and can't find it %>
     <div class="profile-dropdown" data-username="<%= @user.username %>">
       <button id="user-profile-dropdown">
         <%= image_tag("three-dots.svg", class: "dropdown-icon", alt: "Toggle dropdown menu") %>
@@ -153,6 +160,9 @@
       <div id="user-profile-dropdownmenu" class="profile-dropdownmenu">
         <button id="user-profile-dropdownmenu-block-button" data-profile-user-id="<%= @user.id %>" class="block-button" type="button">Block @<%= @user.username %></button>
         <% if user_signed_in? %>
+        <%# does the js pack tag refer to the profileDropdown in the JS directory?
+        The only file in that folder is blockButton.js, so a little confused what is
+        being connected here %>
           <%= javascript_pack_tag "profileDropdown", defer: true %>
         <% end %>
         <a href="/report-abuse?url=https://dev.to/<%= @user.username %>">Report Abuse</a>
@@ -175,6 +185,7 @@
      data-algolia-tag="<%= "user_#{@user.id}" %>"
      data-feed="<%= params[:timeframe] || "base-feed" %>"
      data-articles-since="0">
+     <%# i think this is where the sidebar html is being rendered from the sidebar erb partial %>
   <%= render "users/sidebar" %>
   <div class="articles-list" id="articles-list">
     <div class="on-page-nav-controls user-nav-controls" id="on-page-nav-controls">

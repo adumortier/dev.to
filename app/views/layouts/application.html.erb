@@ -6,6 +6,7 @@
       <%= flash[:global_notice] %>
     </div>
   <% end %>
+  <%# the div below appears to be the div encompassing the entire page contents %>
   <div id="page-content-inner">
     <% if @hero_html %>
       <%= @hero_html.html_safe %>

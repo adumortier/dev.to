@@ -1,0 +1,6 @@
+
+app/views/users/show.html.erb
+app/controllers/StoriesController (index method)
+app/views/layouts/application.html.erb
+app/views/users/_sidebar.html.erb 
+app/views/pages/show.html.erb

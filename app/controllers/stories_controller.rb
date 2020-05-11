@@ -16,10 +16,12 @@ class StoriesController < ApplicationController
 
   rescue_from ArgumentError, with: :bad_request
 
+  # this is the method we will be using to route to the appropriate view
   def index
     @page = (params[:page] || 1).to_i
     @article_index = true
 
+    # conditional logic below to match username to what is shown?
     return handle_user_or_organization_or_podcast_or_page_index if params[:username]
     return handle_tag_index if params[:tag]
 
