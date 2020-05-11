@@ -482,6 +482,18 @@ class User < ApplicationRecord
     name
   end
 
+  def number_visits_per_day
+    return user.sign_in_count.round(1) if user.membership_started_at.today?
+
+    (user.sign_in_count.to_f / (Time.zone.today - user.membership_started_at.to_date).to_i).round(1)
+  end
+
+  def number_articles_per_day
+    return user.articles_count.round(1) if user.membership_started_at.today?
+
+    (user.articles_count.to_f / (Time.zone.today - user.membership_started_at.to_date).to_i).round(1)
+  end
+
   private
 
   def index_id
