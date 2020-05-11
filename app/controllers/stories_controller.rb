@@ -96,6 +96,7 @@ class StoriesController < ApplicationController
   end
 
   def handle_user_or_organization_or_podcast_or_page_index
+    # loads the podcast, organisation and page (if any) for the current user
     @podcast = Podcast.available.find_by(slug: params[:username].downcase)
     @organization = Organization.find_by(slug: params[:username].downcase)
     @page = Page.find_by(slug: params[:username].downcase, is_top_level_path: true)
@@ -106,6 +107,7 @@ class StoriesController < ApplicationController
     elsif @page
       handle_page_display
     else
+      # if podcast, organisation and page were not found
       handle_user_index
     end
   end
@@ -179,19 +181,26 @@ class StoriesController < ApplicationController
   end
 
   def handle_user_index
+    # finds user in the Users table
     @user = User.find_by(username: params[:username].tr("@", "").downcase)
     unless @user
+      # checks for old username if no user was found with the username passed
       redirect_to_changed_username_profile
       return
     end
+    # the username of users that have been banished is reset to spam_<some_random_number>
     not_found if @user.username.include?("spam_") && @user.decorate.fully_banished?
+    # returns user comments if any
     assign_user_comments
+    # returns user stories if any
     assign_user_stories
     @list_of = "articles"
     redirect_if_view_param
     return if performed?
 
+    # where is this set_surrogate_key_header method coming from? did not find it defined anywhere. google search did not return anything
     set_surrogate_key_header "articles-user-#{@user.id}"
+    # renders the user show page
     render template: "users/show"
   end
 

@@ -1,0 +1,2 @@
+- app/controllers/stories_controller.rb
+- app/views/users/show.html.erb

@@ -1,9 +1,12 @@
 <% title @user.name %>
 
 <%= content_for :page_meta do %>
+  <%# content_for is used when the layout contains distinct regions such as sidebars and footers that need to their own block of content inserted %>
+  <%# the meta partials set the meta information for the page %>
   <%= render "users/meta" %>
 <% end %>
 
+<%# use caching for this section, cache only valid for 10 days  %>
 <% cache "main-user-profile-header-area-#{@user.id}-#{@user.profile_updated_at}", expires_in: 10.days do %>
   <style>
     .widget header {
@@ -24,19 +27,25 @@
     }
     <% end %>
   </style>
+  <%#  user_colors_style method defined in application_helper %>
   <div class="user-profile-header" style="<%= user_colors_style(@user) %>" itemscope itemtype="http://schema.org/Person" itemprop="mainEntity">
+    <%# normally meta tags are supposed to be in the head part of the page, is this bad practice? %>
     <meta itemprop="url" content="https://dev.to/<%= @user.username %>">
     <div class="user-profile-header-container">
       <div class="profile-pic-wrapper">
+        <%# uses CloudinaryHelper but not sure where the profile_image_url method is from %>
         <img class="profile-pic" src="<%= ProfileImage.new(@user).get(width: 320) %>" itemprop="image" alt="<%= @user.username %> profile" style="border-color:<%= user_colors(@user)[:bg] %>;background:<%= user_colors(@user)[:bg] %>" />
       </div>
       <div class="profile-details">
         <h1>
           <span itemprop="name"><%= @user.name %><%= render "shared/pro_checkmark", style: nil, width: nil %></span>
           <span class="user-profile-follow-button-wrapper">
+            <%# the user_colors used below defined in application_helper.rb %>
             <button id="user-follow-butt" class="cta follow-action-button user-profile-follow-button" style="color:<%= user_colors(@user)[:text] %>;background-color:<%= user_colors(@user)[:bg] %>" data-info='{"id":<%= @user.id %>,"className":"<%= @user.class.name %>"}'>&nbsp;</button>
           </span>
+          <%# user_signed_in is a method included in the devise gem %>
           <% if user_signed_in? %>
+            <%# the chat button is desactivated at the moment, it would normally hit the chat_channels controller and provide chat functionality%>
             <span class="user-profile-chat-button-wrapper">
               <a href="/connect/@<%= @user.username %>" id="user-connect-redirect" style="display:none">
                 <button class="chat-action-button user-profile-chat-button" id="modal-opener" style="color:<%= user_colors(@user)[:text] %>;background-color:<%= user_colors(@user)[:bg] %>; display:none; ">CHAT</button>
@@ -45,8 +54,11 @@
           <% end %>
         </h1>
         <p class="profile-description" itemprop="description">
+          <%#  summary can be entered by user when signing up, otherwise 404 message is shown instead below %>
+          <%# the sample method does not seem to do much here since the array only has one element %>
           <%= @user.summary.presence || ["404 bio not found"].sample %>
         </p>
+        <%# the style defined below applies to the elements that belong to the classes listed, maybe not best practice? %>
         <style>
           .profile-details .social .icon-img path {
             fill: <%= HexComparer.new([user_colors(@user)[:bg], user_colors(@user)[:text]]).brightness(0.78) %> !important;
@@ -56,8 +68,11 @@
           }
         </style>
         <p class="social">
+          <%# this section checks for the different social media attributes present for the user %>
+          <%# and adds a link/icon for any of the user social media accounts %>
           <% if @user.twitter_username? %>
             <a href="https://twitter.com/<%= @user.twitter_username %>" target="_blank" rel="noopener me">
+              <%# inline_svg_tag is a method available through the inline_svg gem %>
               <%= inline_svg_tag("twitter-logo.svg", class: "icon-img", aria: true, title: "Twitter logo") %>
             </a>
           <% end %>
@@ -128,6 +143,7 @@
         </p>
       </div>
     </div>
+    <%# Post Published come from the _sidebar partial %>
     <div class="modal" style="display: none">
       <div class="overlay"></div>
       <div class="modal-content " id="new-message-modal">
@@ -160,7 +176,7 @@
     </div>
   </div>
 <% end %>
-
+<%# end of the caching block  %>
 <% if @user.currently_streaming_on_twitch? %>
   <style>
     #icon-twitch path {
@@ -171,6 +187,7 @@
 <% end %>
 
 <div class="home sub-home" id="index-container"
+      <%#  Apparently params, algolia-tag, feed and articles-since are stored, where are they used?  %>
      data-params="<%= params.to_json(only: %i[tag username q]) %>" data-which="<%= @list_of %>"
      data-algolia-tag="<%= "user_#{@user.id}" %>"
      data-feed="<%= params[:timeframe] || "base-feed" %>"
