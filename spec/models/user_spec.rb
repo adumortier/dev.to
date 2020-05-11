@@ -941,4 +941,24 @@ RSpec.describe User, type: :model do
       expect(user.receives_follower_email_notifications?).to be(true)
     end
   end
+
+  describe "#number_visits_per_day" do
+    it "returns the number of visits per day" do
+      user.sign_in_count = 8
+      user.membership_started_at = Time.zone.today.days_ago(4)
+      expect(user.number_visits_per_day).to eq(2.0)
+      user.membership_started_at = Time.zone.today
+      expect(user.number_visits_per_day).to eq(8.0)
+    end
+  end
+
+  describe "#number_articles_per_day" do
+    it "returns the number of articles read per day" do
+      user.articles_count = 8
+      user.membership_started_at = Time.zone.today.days_ago(4)
+      expect(user.number_articles_per_day).to eq(2.0)
+      user.membership_started_at = Time.zone.today
+      expect(user.number_articles_per_day).to eq(8.0)
+    end
+  end
 end
