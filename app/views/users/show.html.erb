@@ -4,6 +4,7 @@
   <%= render "users/meta" %>
 <% end %>
 
+
 <% cache "main-user-profile-header-area-#{@user.id}-#{@user.profile_updated_at}", expires_in: 10.days do %>
   <style>
     .widget header {
@@ -24,16 +25,20 @@
     }
     <% end %>
   </style>
+  #This part of the code dispalys the header area of a user's profile page. 
   <div class="user-profile-header" style="<%= user_colors_style(@user) %>" itemscope itemtype="http://schema.org/Person" itemprop="mainEntity">
     <meta itemprop="url" content="https://dev.to/<%= @user.username %>">
     <div class="user-profile-header-container">
       <div class="profile-pic-wrapper">
+      #Profile picture
         <img class="profile-pic" src="<%= ProfileImage.new(@user).get(width: 320) %>" itemprop="image" alt="<%= @user.username %> profile" style="border-color:<%= user_colors(@user)[:bg] %>;background:<%= user_colors(@user)[:bg] %>" />
       </div>
       <div class="profile-details">
         <h1>
+        #User's name as the h1
           <span itemprop="name"><%= @user.name %><%= render "shared/pro_checkmark", style: nil, width: nil %></span>
           <span class="user-profile-follow-button-wrapper">
+          #Button to follow a user
             <button id="user-follow-butt" class="cta follow-action-button user-profile-follow-button" style="color:<%= user_colors(@user)[:text] %>;background-color:<%= user_colors(@user)[:bg] %>" data-info='{"id":<%= @user.id %>,"className":"<%= @user.class.name %>"}'>&nbsp;</button>
           </span>
           <% if user_signed_in? %>
@@ -44,6 +49,7 @@
             </span>
           <% end %>
         </h1>
+        #User's profile description
         <p class="profile-description" itemprop="description">
           <%= @user.summary.presence || ["404 bio not found"].sample %>
         </p>
@@ -56,6 +62,7 @@
           }
         </style>
         <p class="social">
+        #A user's social media icons conditionally renders based on whether or not a user has included them upon setting up their page
           <% if @user.twitter_username? %>
             <a href="https://twitter.com/<%= @user.twitter_username %>" target="_blank" rel="noopener me">
               <%= inline_svg_tag("twitter-logo.svg", class: "icon-img", aria: true, title: "Twitter logo") %>
