@@ -16,10 +16,10 @@ class StoriesController < ApplicationController
 
   rescue_from ArgumentError, with: :bad_request
 
+  <% #Based on the routes.db file, this is the method responsible for displaying the profile page of a user.  However, it's unclear to me how the @page and @article_index tie back to the _sidebar.html.erb and the show.html.erb files%>
   def index
     @page = (params[:page] || 1).to_i
     @article_index = true
-
     return handle_user_or_organization_or_podcast_or_page_index if params[:username]
     return handle_tag_index if params[:tag]
 
@@ -95,6 +95,7 @@ class StoriesController < ApplicationController
     not_found
   end
 
+  <% #This method is related somehow to the index method above as it's one of the return values noted%>
   def handle_user_or_organization_or_podcast_or_page_index
     @podcast = Podcast.available.find_by(slug: params[:username].downcase)
     @organization = Organization.find_by(slug: params[:username].downcase)
@@ -178,6 +179,7 @@ class StoriesController < ApplicationController
     render template: "organizations/show"
   end
 
+  <% #This is also related back to the index method, but I'm not sure what's fully how exactly. This method also renders the the users/show.html.erb where the user profile page information displays%>
   def handle_user_index
     @user = User.find_by(username: params[:username].tr("@", "").downcase)
     unless @user
