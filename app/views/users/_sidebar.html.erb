@@ -1,3 +1,4 @@
+<% #On full screen there is a sidebar area on the user's profile that currently displays only three statistics: posts published, comments written, and tags followed (these are always displayed). For the code below (before the next annotation), these are some other items that are conditionally displayed in that sidebar area based on what a user has filled out in their profile including: skills/languages, projects and hacks, available for, etc. %>
 <div id="sidebar-wrapper-left" class="sidebar-wrapper sidebar-wrapper-left">
   <div class="sidebar-bg" id="sidebar-bg-left"></div>
   <div class="side-bar">
@@ -44,6 +45,7 @@
           </div>
         <% end %>
       <% end %>
+      <% #This part is the part of the code that displays the stats including: number of posts published, number of comments written, and number of tags followed. If we do not want to create and additional component or view, we could append the reader's stats to this section. It seems that dthis is always displayed %>
       <% cache "user-profile-sidebar-stats-#{@user.id}-#{@user.last_article_at}-#{@user.last_comment_at}-#{@user.last_followed_at}", expires_in: 10.days do %>
         <div class="sidebar-data">
           <div>
