@@ -16,3 +16,11 @@
     border-radius: 3px;
   }
 }
+
+.daily-stats {
+  h3 {
+    color: $dark-green;
+  }
+  border-top: 1px solid $light-medium-gray;
+  padding: 0 16px 16px 16px;
+}
