@@ -1,45 +1,31 @@
-<!--
-     For Work In Progress Pull Requests, please use the Draft PR feature,
-     see https://github.blog/2019-02-14-introducing-draft-pull-requests/ for further details.
+## Who worked on this
 
-     For a timely review/response, please avoid force-pushing additional
-     commits if your PR already received reviews or comments.
+- [ ] Alexis
+- [ ] Megan
+- [ ] Tanisha
 
-     Before submitting a Pull Request, please ensure you've done the following:
-     - Read the DEV Contributing Guide and the Code of Conduct
-     - Provided tests for your changes
-     - Used descriptive commit messages
-     - Updated any relevant documentation and added any necessary screenshots
--->
+## Type of change
 
-## What type of PR is this? (check all applicable)
+- [ ] Style (Non-breaking Style code)
+- [ ] Testing (Non-breaking Testing code)
+- [ ] Bug fix or refactor (change which fixes an issue)
+- [ ] New feature (change which adds functionality)
 
-- [ ] Refactor
-- [ ] Feature
-- [ ] Bug Fix
-- [ ] Optimization
-- [ ] Documentation Update
+## Summary of the change.
 
-## Description
+🔥 If it is a new feature, describe the feature and the iteration of the project
+spec it addresses.
 
-## Related Tickets & Documents
+Link to issue:
 
-## Mobile & Desktop Screenshots/Recordings (if there are UI changes)
+This closes #
 
-## Added tests?
+🐞 If it is a bug or issue fix, describe the issue that was fixed.
 
-- [ ] yes
-- [ ] no, because they aren't needed
-- [ ] no, because I need help
+Note any questions or struggles as well.
 
-## Added to documentation?
+## Checklist:
 
-- [ ] docs.dev.to
-- [ ] readme
-- [ ] no documentation needed
-
-## [optional] Are there any post deployment tasks we need to perform?
-
-## [optional] What gif best describes this PR or how it makes you feel?
-
-![alt_text](gif_link)
+- [ ] My code follows the Turing style guidelines
+- [ ] I have performed a self-review of my own code
+- [ ] I have commented my code if necessary
