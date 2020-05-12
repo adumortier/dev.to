@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Profile reader stats dashboard", type: :system do
   context "when user visits profile page" do
-    context "when user checks overall stats" do
+    context "when user checks the overall stats" do
       before do
         create(:user, username: "user3000")
         visit "/user3000"

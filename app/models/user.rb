@@ -15,6 +15,8 @@ class User < ApplicationRecord
   acts_as_followable
   acts_as_follower
 
+  has_many :visits, class_name: "Ahoy::Visit"
+  has_many :events, class_name: "Ahoy::Event"
   has_many :organization_memberships, dependent: :destroy
   has_many :organizations, through: :organization_memberships
   has_many :api_secrets, dependent: :destroy

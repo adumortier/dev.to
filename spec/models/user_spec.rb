@@ -961,4 +961,16 @@ RSpec.describe User, type: :model do
       expect(user.number_articles_per_day).to eq(8.0)
     end
   end
+
+  describe "#number_words_per_day" do
+    it "returns the number of words read per day" do
+      # create a few articles with factory
+      user.articles_count = 8
+      user.membership_started_at = Time.zone.today.days_ago(4)
+      expect(user.number_articles_per_day).to eq(2.0)
+      user.membership_started_at = Time.zone.today
+      expect(user.number_articles_per_day).to eq(8.0)
+    end
+  end
+
 end
