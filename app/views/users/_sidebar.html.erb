@@ -45,17 +45,7 @@
         <% end %>
       <% end %>
       <% cache "user-profile-sidebar-stats-#{@user.id}-#{@user.last_article_at}-#{@user.last_comment_at}-#{@user.last_followed_at}", expires_in: 10.days do %>
-        <div class="sidebar-data">
-          <div>
-            <%= pluralize @user.articles.published.size, "Post" %> Published
-          </div>
-          <div>
-            <%= pluralize @user.comments.where(deleted: false).size, "Comment" %> Written
-          </div>
-          <div>
-            <%= pluralize @user.decorate.cached_followed_tags.size, "Tag" %> Followed
-          </div>
-        </div>
+
         <div class="daily-stats">
           <h3>Daily Stats</h3>
           <p>3 Visits</p>
@@ -63,6 +53,17 @@
           <p>4 Articles Read</p>
           <p>1456 Words Read</p>
         </div>
+        <div class="sidebar-data">
+        <div>
+          <%= pluralize @user.articles.published.size, "Post" %> Published
+        </div>
+        <div>
+          <%= pluralize @user.comments.where(deleted: false).size, "Comment" %> Written
+        </div>
+        <div>
+          <%= pluralize @user.decorate.cached_followed_tags.size, "Tag" %> Followed
+        </div>
+      </div>
       <% end %>
     </div>
   </div>
