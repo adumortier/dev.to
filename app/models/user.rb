@@ -15,6 +15,9 @@ class User < ApplicationRecord
   acts_as_followable
   acts_as_follower
 
+  devise :registerable, :trackable
+  # has_many :visits, class_name: "Ahoy::Visit"
+  # has_many :events, class_name: "Ahoy::Event"
   has_many :organization_memberships, dependent: :destroy
   has_many :organizations, through: :organization_memberships
   has_many :api_secrets, dependent: :destroy
@@ -480,6 +483,42 @@ class User < ApplicationRecord
 
   def title
     name
+  end
+
+  def number_visits_per_day
+    return user.sign_in_count.round(1) if user.created_at.today?
+
+    (user.sign_in_count.to_f / (Time.zone.today - user.created_at.to_date).to_i).round(1)
+  end
+
+  def number_articles_read
+    user.page_views.select(:article_id).distinct.count
+  end
+
+  def number_articles_per_day
+    article_count = user.page_views.select(:article_id).distinct.count
+    return article_count.round(1) if user.created_at.today?
+
+    (article_count.to_f / (Time.zone.today - user.created_at.to_date).to_i).round(1)
+  end
+
+  def average_active_time_per_day
+    seconds_spent_reading = user.page_views.sum(:time_tracked_in_seconds).round(1)
+    return seconds_spent_reading if user.created_at.today?
+
+    (user.page_views.sum(:time_tracked_in_seconds).to_f / (Time.zone.today - user.created_at.to_date).to_i).round(1)
+  end
+
+  def number_words_read
+    article_words = page_views.joins(:article).select("articles.processed_html").pluck("articles.processed_html")
+    return article_words.sum { |article| article.delete("<p>", "</p>").split.size } if user.created_at.today?
+  end
+
+  def number_words_per_day
+    article_words = page_views.joins(:article).select("articles.processed_html").pluck("articles.processed_html")
+    return article_words.sum { |article| article.delete("<p>", "</p>").split.size } if user.created_at.today?
+
+    (article_words.sum { |article| article.delete("<p>", "</p>").split.size } / (Time.zone.today - user.created_at.to_date).to_i)
   end
 
   private

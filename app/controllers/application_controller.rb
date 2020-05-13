@@ -5,6 +5,12 @@ class ApplicationController < ActionController::Base
   include ValidRequest
   include Pundit
 
+  after_action :track_action
+
+  def track_action
+    ahoy.track "Viewed #{controller_name}##{action_name}", request.filtered_parameters
+  end
+
   rescue_from ActionView::MissingTemplate, with: :routing_error
 
   def not_found
