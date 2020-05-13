@@ -945,32 +945,52 @@ RSpec.describe User, type: :model do
   describe "#number_visits_per_day" do
     it "returns the number of visits per day" do
       user.sign_in_count = 8
-      user.membership_started_at = Time.zone.today.days_ago(4)
+      user.created_at = Time.zone.today.days_ago(4)
       expect(user.number_visits_per_day).to eq(2.0)
-      user.membership_started_at = Time.zone.today
+      user.created_at = Time.zone.today
       expect(user.number_visits_per_day).to eq(8.0)
+    end
+  end
+
+  describe "#number_articles_read" do
+    it "returns the number of articles read in total" do
+      create_list(:page_view, 10, user: user)
+      expect(user.number_articles_read).to eq(10)
     end
   end
 
   describe "#number_articles_per_day" do
     it "returns the number of articles read per day" do
-      user.articles_count = 8
-      user.membership_started_at = Time.zone.today.days_ago(4)
-      expect(user.number_articles_per_day).to eq(2.0)
-      user.membership_started_at = Time.zone.today
-      expect(user.number_articles_per_day).to eq(8.0)
+      user.created_at = Time.zone.today.days_ago(4)
+      create_list(:page_view, 10, user: user)
+      expect(user.number_articles_per_day).to eq(2.5)
+    end
+  end
+
+  describe "#average_active_time_per_day" do
+    it "returns the average active time per day" do
+      create_list(:page_view, 10, user: user, time_tracked_in_seconds: 10)
+      user.created_at = Time.zone.today.days_ago(4)
+      expect(user.average_active_time_per_day).to eq(25.0)
+    end
+  end
+
+  describe "#number_words_read" do
+    it "returns the number of words read in total" do
+      article = create(:article)
+      word_per_article = article.processed_html.delete("<p>", "</p>").split.size
+      create_list(:page_view, 10, user: user, article: article)
+      expect(user.number_words_read).to eq((word_per_article * 10))
     end
   end
 
   describe "#number_words_per_day" do
     it "returns the number of words read per day" do
-      # create a few articles with factory
-      user.articles_count = 8
-      user.membership_started_at = Time.zone.today.days_ago(4)
-      expect(user.number_articles_per_day).to eq(2.0)
-      user.membership_started_at = Time.zone.today
-      expect(user.number_articles_per_day).to eq(8.0)
+      article = create(:article)
+      word_per_article = article.processed_html.delete("<p>", "</p>").split.size
+      create_list(:page_view, 10, user: user, article: article)
+      user.created_at = Time.zone.today.days_ago(6)
+      expect(user.number_words_per_day).to eq((word_per_article * 10 / 6))
     end
   end
-
 end
