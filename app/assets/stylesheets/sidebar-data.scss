@@ -6,6 +6,13 @@
     color: $dark-green;
     font-family: $monospace;
     text-transform: lowercase;
+    margin: 8px 0;
+    padding: 8px 0;
+    font-size: 0.9em;
+  }
+  p {
+    margin: 8px 0;
+    padding: 0;
   }
   border-radius: 3px;
   margin-bottom: 32px;
@@ -21,9 +28,13 @@
 }
 
 .daily-stats {
+  margin: 8px 0;
+  padding: 0;
   h4 {
     color: $dark-green;
     font-family: $monospace;
     text-transform: lowercase;
+    font-size: 0.9em;
+    padding: 8px 0;
   }
 }

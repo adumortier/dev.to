@@ -77,6 +77,11 @@ GEM
       addressable (>= 2.3.2)
       nokogiri
       safely_block (>= 0.1.1)
+    ahoy_matey (3.0.3)
+      activesupport (>= 5)
+      device_detector
+      geocoder (>= 1.4.5)
+      safely_block (>= 0.2.1)
     algoliasearch (1.27.1)
       httpclient (~> 2.8, >= 2.8.3)
       json (>= 1.5.1)
@@ -216,6 +221,7 @@ GEM
       thor (>= 0.19, < 2)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
+    device_detector (1.0.3)
     devise (4.7.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -337,6 +343,7 @@ GEM
     formatador (0.2.5)
     front_matter_parser (0.2.1)
     gemoji (4.0.0.rc2)
+    geocoder (1.6.3)
     get_process_mem (0.2.5)
       ffi (~> 1.0)
     gibbon (3.3.3)
@@ -853,6 +860,7 @@ DEPENDENCIES
   addressable (~> 2.7)
   administrate (~> 0.12)
   ahoy_email (~> 1.1)
+  ahoy_matey
   algoliasearch-rails (~> 1.24)
   algorithmia (~> 1.1)
   ancestry (~> 3.0)
@@ -994,4 +1002,4 @@ RUBY VERSION
    ruby 2.6.5p114
 
 BUNDLED WITH
-   2.0.2
+   2.1.4
