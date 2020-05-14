@@ -15,9 +15,8 @@ class User < ApplicationRecord
   acts_as_followable
   acts_as_follower
 
-  devise :registerable, :trackable
-  # has_many :visits, class_name: "Ahoy::Visit"
-  # has_many :events, class_name: "Ahoy::Event"
+  devise :rememberable, :trackable
+
   has_many :organization_memberships, dependent: :destroy
   has_many :organizations, through: :organization_memberships
   has_many :api_secrets, dependent: :destroy
@@ -65,7 +64,7 @@ class User < ApplicationRecord
 
   mount_uploader :profile_image, ProfileImageUploader
 
-  devise :omniauthable, :registerable, :database_authenticatable, :confirmable, :rememberable
+  devise :omniauthable, :registerable, :database_authenticatable, :confirmable, :rememberable, :trackable
 
   validates :email,
             length: { maximum: 50 },
