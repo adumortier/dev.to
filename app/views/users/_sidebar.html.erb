@@ -48,21 +48,21 @@
       <div class="widget">
         <div class="daily-stats">
           <h4>Daily Stats</h4>
-          <p id="visits-per-day"><%= pluralize @user.number_visits_per_day, "Visit" %> </p>
-          <p id="average-active-time-per-day"><%= pluralize @user.average_active_time_per_day, "Second" %> Spent Reading</p>
-          <p id="average-number-articles-per-day"><%= pluralize @user.number_articles_per_day, "Article" %> Read</p>
-          <p id="average-number-words-per-day"><%= pluralize @user.number_words_per_day, "Word" %> Read </p>
+          <p id="visits-per-day"><%= pluralize @user.number_visits_per_day, "visit" %> </p>
+          <p id="average-active-time-per-day"><%= distance_of_time_in_words(@user.average_active_time_per_day).capitalize %> spent reading</p>
+          <p id="average-number-articles-per-day"><%= pluralize @user.number_articles_per_day, "article" %> read</p>
+          <p id="average-number-words-per-day"><%= pluralize @user.number_words_per_day, "word" %> read </p>
         </div>
         </div>
         <div class="sidebar-data">
         <h4>Overall Stats</h4>
-          <p> <%= pluralize @user.articles.published.size, "Post" %> Published </p>
-          <p> <%= pluralize @user.comments.where(deleted: false).size, "Comment" %> Written </p>
-          <p> <%= pluralize @user.decorate.cached_followed_tags.size, "Tag" %> Followed </p>
-          <p id="number-visits"> <%= pluralize @user.sign_in_count, "Visit" %> </p>
-          <p id="number-articles-read"> <%= pluralize @user.number_articles_read, "Article" %> Read </p>
-          <p> 5 Comments Received</p>
-          <p id="number-words-read"> <%= pluralize @user.number_words_read, "Word" %> Read </p>
+          <p> <%= pluralize @user.articles.published.size, "post" %> published </p>
+          <p> <%= pluralize @user.comments.where(deleted: false).size, "comment" %> written </p>
+          <p> <%= pluralize @user.decorate.cached_followed_tags.size, "tag" %> followed </p>
+          <p id="number-visits"> <%= pluralize @user.sign_in_count, "visit" %> </p>
+          <p id="number-articles-read"> <%= pluralize @user.number_articles_read, "article" %> read </p>
+          <p id="number-comments_received"> <%= pluralize @user.number_comments_received, "comment" %> received </p>
+          <p id="number-words-read"> <%= pluralize @user.number_words_read, "word" %> read </p>
         </div>
       <% end %>
     </div>
