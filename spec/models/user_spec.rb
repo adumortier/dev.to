@@ -946,9 +946,9 @@ RSpec.describe User, type: :model do
     it "returns the number of visits per day" do
       user.sign_in_count = 8
       user.created_at = Time.zone.today.days_ago(4)
-      expect(user.number_visits_per_day).to eq(2.0)
+      expect(user.number_visits_per_day).to eq(2)
       user.created_at = Time.zone.today
-      expect(user.number_visits_per_day).to eq(8.0)
+      expect(user.number_visits_per_day).to eq(8)
     end
   end
 
@@ -963,7 +963,7 @@ RSpec.describe User, type: :model do
     it "returns the number of articles read per day" do
       user.created_at = Time.zone.today.days_ago(4)
       create_list(:page_view, 10, user: user)
-      expect(user.number_articles_per_day).to eq(2.5)
+      expect(user.number_articles_per_day).to eq(3)
     end
   end
 
@@ -971,7 +971,7 @@ RSpec.describe User, type: :model do
     it "returns the average active time per day" do
       create_list(:page_view, 10, user: user, time_tracked_in_seconds: 10)
       user.created_at = Time.zone.today.days_ago(4)
-      expect(user.average_active_time_per_day).to eq(25.0)
+      expect(user.average_active_time_per_day).to eq(25)
     end
   end
 
@@ -990,7 +990,16 @@ RSpec.describe User, type: :model do
       word_per_article = article.processed_html.delete("<p>", "</p>").split.size
       create_list(:page_view, 10, user: user, article: article)
       user.created_at = Time.zone.today.days_ago(6)
-      expect(user.number_words_per_day).to eq((word_per_article * 10 / 6))
+      expect(user.number_words_per_day).to eq((word_per_article * 10 / 6).round)
+    end
+  end
+
+  describe "#number_comments_received" do
+    it "returns the number of comments received" do
+      expect(user.number_comments_received).to eq(0)
+      create(:article, user: user, comments_count: 10)
+      create(:article, user: user, comments_count: 5)
+      expect(user.number_comments_received).to eq(15)
     end
   end
 end

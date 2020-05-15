@@ -487,7 +487,7 @@ class User < ApplicationRecord
   def number_visits_per_day
     return user.sign_in_count.round(1) if user.created_at.today?
 
-    (user.sign_in_count.to_f / (Time.zone.today - user.created_at.to_date).to_i).round(1)
+    (user.sign_in_count.to_f / (Time.zone.today - user.created_at.to_date).to_i).round
   end
 
   def number_articles_read
@@ -498,11 +498,11 @@ class User < ApplicationRecord
     article_count = user.page_views.select(:article_id).distinct.count
     return article_count.round(1) if user.created_at.today?
 
-    (article_count.to_f / (Time.zone.today - user.created_at.to_date).to_i).round(1)
+    (article_count.to_f / (Time.zone.today - user.created_at.to_date).to_i).round
   end
 
   def average_active_time_per_day
-    seconds_spent_reading = user.page_views.sum(:time_tracked_in_seconds).round(1)
+    seconds_spent_reading = user.page_views.sum(:time_tracked_in_seconds).round
     return seconds_spent_reading if user.created_at.today?
 
     (user.page_views.sum(:time_tracked_in_seconds).to_f / (Time.zone.today - user.created_at.to_date).to_i).round(1)
@@ -510,14 +510,18 @@ class User < ApplicationRecord
 
   def number_words_read
     article_words = page_views.joins(:article).select("articles.processed_html").pluck("articles.processed_html")
-    return article_words.sum { |article| article.delete("<p>", "</p>").split.size } if user.created_at.today?
+    article_words.sum { |article| article.delete("<p>", "</p>").split.size }
   end
 
   def number_words_per_day
     article_words = page_views.joins(:article).select("articles.processed_html").pluck("articles.processed_html")
     return article_words.sum { |article| article.delete("<p>", "</p>").split.size } if user.created_at.today?
 
-    (article_words.sum { |article| article.delete("<p>", "</p>").split.size } / (Time.zone.today - user.created_at.to_date).to_i)
+    (article_words.sum { |article| article.delete("<p>", "</p>").split.size } / (Time.zone.today - user.created_at.to_date)).round
+  end
+
+  def number_comments_received
+    user.articles.sum(:comments_count)
   end
 
   private
