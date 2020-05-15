@@ -20,11 +20,11 @@ RSpec.describe "Profile reader stats dashboard", type: :system do
         end
       end
 
-      # it "shows the number of comments received" do
-      #   within(".sidebar-data") do
-      #     expect(first("#number-comments-received").text).not_to be_empty
-      #   end
-      # end
+      it "shows the number of comments received" do
+        within(".sidebar-data") do
+          expect(first("#number-comments-received").text).not_to be_empty
+        end
+      end
 
       it "shows the number of words read" do
         within(".sidebar-data") do
