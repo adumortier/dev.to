@@ -16,7 +16,7 @@
 🔥 If it is a new feature, describe the feature and the iteration of the project
 spec it addresses.
 
-Link to issue:
+## Link to issue:
 
 This closes #
 
